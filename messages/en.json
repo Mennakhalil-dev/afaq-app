@@ -1,0 +1,76 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "properties": "Properties",
+    "services": "Our Finishings",
+    "security": "Security Systems",
+    "projects": "Projects",
+    "about": "About Us",
+    "faq": "FAQ",
+    "contact": "Contact Us"
+  },
+  "Hero": {
+    "title": "Invest with Confidence with Afaq",
+    "subtitle": "Integrated real estate solutions for buying, selling, and investing with a secure experience under one roof",
+    "cta_primary": "Browse Properties",
+    "cta_secondary": "Contact Us"
+  },
+  "Search": {
+    "title": "Properties",
+    "subtitle": "Discover Your Perfect Property",
+    "placeholder": "Search for a property or service..",
+    "property_type": "Property Type",
+    "city": "City",
+    "operation_type": "Operation Type",
+    "buy": "Buy",
+    "rent": "Rent",
+    "search_btn": "Search Properties"
+  },
+  "Featured": {
+    "title": "Latest Properties",
+    "view_all": "View All Properties"
+  },
+  "Services": {
+    "title": "Our Finishings",
+    "subtitle": "Integrated solutions for your comfort and security",
+    "view_all": "Explore Our Finishings"
+  },
+  "About": {
+    "title": "About Us",
+    "subtitle": "Your Trusted Partner in Real Estate Investment",
+    "description": "Afaq provides integrated real estate solutions including buying, selling, and renting properties, in addition to finishing services, surveillance systems, and security solutions. We help our clients make the right decision through extensive experience and professional service ensuring quality and trust at every step.",
+    "cta": "Contact Us"
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "subtitle": "Let the Afaq team help you find the right choice.",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "service_type": "Service Type",
+    "message": "Message",
+    "submit": "Submit Request",
+    "success": "Your request has been sent successfully. The Afaq team will contact you soon."
+  },
+  "Footer": {
+    "description": "Afaq is not just a company displaying properties, but a real estate firm providing integrated solutions and helping clients reach the right choice.",
+    "quick_links": "Quick Links",
+    "contact_info": "Contact Info",
+    "copyright": "© 2026 Afaq. All Rights Reserved."
+  },
+  "Common": {
+    "details": "Details",
+    "view_details": "View Details",
+    "currency": "EGP",
+    "sqm": "sqm",
+    "beds": "Beds",
+    "baths": "Baths",
+    "available": "Available",
+    "sold": "Sold",
+    "rented": "Rented",
+    "unavailable": "Unavailable",
+    "delivery": "Delivery",
+    "legal_status": "Legal Status",
+    "developer": "Developer"
+  }
+}

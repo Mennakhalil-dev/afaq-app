@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #000000;
+  }
+
+  /* Define base styles */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .rtl {
+    direction: rtl;
+  }
+  
+  .ltr {
+    direction: ltr;
+  }
+}
+
+/* Custom styles for gold accents and specific typography */
+.text-gold {
+  color: #b58f40;
+}
+
+.bg-gold {
+  background-color: #b58f40;
+}
+
+.border-gold {
+  border-color: #b58f40;
+}
+
+/* Gold Gradient Button */
+.btn-gold {
+  @apply bg-gold text-white px-6 py-3 rounded-md font-medium transition-all duration-300 hover:brightness-110 shadow-lg;
+}
+
+/* Input styles */
+.input-field {
+  @apply w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all;
+}
