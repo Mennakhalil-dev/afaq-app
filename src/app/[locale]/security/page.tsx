@@ -29,15 +29,25 @@ export default async function SecurityPage({ params: { locale } }: { params: { l
           {packages.map(pkg => (
             <div key={pkg.id} className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-300">
               
-              {/* Removed Image Header */}
-              <div className="bg-dark-100 p-6 text-center border-b-4 border-gold">
-                  <h3 className="text-3xl font-black mb-1 text-gold">
-                    {locale === 'en' ? pkg.title_en : pkg.title_ar}
-                  </h3>
-                  <p className="text-gray-200 text-lg">
-                    {locale === 'en' ? pkg.subtitle_en : pkg.subtitle_ar}
-                  </p>
-              </div>
+              {/* Image Header */}
+              {pkg.image ? (
+                <div className="relative h-48 w-full">
+                  <img src={pkg.image} alt={locale === 'en' ? pkg.title_en : pkg.title_ar} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-dark-200 bg-opacity-60 flex flex-col justify-center items-center text-center p-4">
+                    <h3 className="text-3xl font-black mb-1 text-gold">{locale === 'en' ? pkg.title_en : pkg.title_ar}</h3>
+                    <p className="text-gray-200 text-lg">{locale === 'en' ? pkg.subtitle_en : pkg.subtitle_ar}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-dark-100 p-6 text-center border-b-4 border-gold">
+                    <h3 className="text-3xl font-black mb-1 text-gold">
+                      {locale === 'en' ? pkg.title_en : pkg.title_ar}
+                    </h3>
+                    <p className="text-gray-200 text-lg">
+                      {locale === 'en' ? pkg.subtitle_en : pkg.subtitle_ar}
+                    </p>
+                </div>
+              )}
               
               <div className="p-8 flex-1 flex flex-col">
                 

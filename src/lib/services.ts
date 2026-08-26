@@ -118,6 +118,7 @@ export interface Package {
   includes_ar: string;
   features_en: string;
   features_ar: string;
+  image?: string;
   createdAt?: string;
 }
 

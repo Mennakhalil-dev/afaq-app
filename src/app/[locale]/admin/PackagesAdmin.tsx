@@ -19,6 +19,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
   const [includesEn, setIncludesEn] = useState('');
   const [featuresAr, setFeaturesAr] = useState('');
   const [featuresEn, setFeaturesEn] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     loadPackages();
@@ -34,7 +35,17 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setLoading(true);
 
     try {
-      const payload: Omit<Package, 'id'> = {
+      let imageUrl = undefined;
+      
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.url) imageUrl = data.url;
+      }
+
+      const payload: Partial<Package> = {
         type,
         title_en: titleEn,
         title_ar: titleAr,
@@ -49,12 +60,16 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
         features_ar: featuresAr
       };
 
+      if (imageUrl) {
+        payload.image = imageUrl;
+      }
+
       if (editingId) {
         await updatePackage(editingId, payload);
         alert('تم التعديل بنجاح!');
         setEditingId(null);
       } else {
-        await addPackage(payload);
+        await addPackage(payload as Omit<Package, 'id'>);
         alert('تمت الإضافة بنجاح!');
       }
       
@@ -81,6 +96,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setIncludesEn(p.includes_en);
     setFeaturesAr(p.features_ar);
     setFeaturesEn(p.features_en);
+    setImageFile(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -99,6 +115,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setPriceTextAr(''); setPriceTextEn('');
     setIncludesAr(''); setIncludesEn('');
     setFeaturesAr(''); setFeaturesEn('');
+    setImageFile(null);
   };
 
   return (
@@ -150,6 +167,11 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
               <label className="block text-sm font-bold text-gray-700 mb-1">السعر</label>
               <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full border p-2 rounded" required />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">الصورة (اختياري)</label>
+            <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] || null)} className="w-full border p-2 rounded" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
