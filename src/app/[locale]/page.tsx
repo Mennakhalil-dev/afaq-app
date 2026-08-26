@@ -4,94 +4,7 @@ import PropertySearch from '@/components/home/PropertySearch';
 import PropertyCard from '@/components/ui/PropertyCard';
 import ContactForm from '@/components/home/ContactForm';
 import Link from 'next/link';
-
-// Data factory based on locale
-const getMockProperties = (locale: string) => [
-  {
-    id: "1",
-    title: locale === 'en' ? "175 Sqm Apartment" : "شقة سكنية 175 متر",
-    location: locale === 'en' ? "10th of Ramadan, Egypt" : "العاشر من رمضان، مصر",
-    price: 1850000,
-    area: 175,
-    beds: 3,
-    baths: 2,
-    type: locale === 'en' ? "Apartment" : "شقة",
-    image: "/images/units/1.png",
-    status: "available" as const,
-  },
-  {
-    id: "2",
-    title: locale === 'en' ? "170 Sqm Unit (Front)" : "وحدة 170 متر (أمامي)",
-    location: locale === 'en' ? "10th of Ramadan, Egypt" : "العاشر من رمضان، مصر",
-    price: 1900000,
-    area: 170,
-    beds: 3,
-    baths: 2,
-    type: locale === 'en' ? "Apartment" : "شقة",
-    image: "/images/units/4.png",
-    status: "available" as const,
-  },
-  {
-    id: "3",
-    title: locale === 'en' ? "170 Sqm Unit (Side)" : "وحدة 170 متر (جانبي)",
-    location: locale === 'en' ? "10th of Ramadan, Egypt" : "العاشر من رمضان، مصر",
-    price: 1900000,
-    area: 170,
-    beds: 3,
-    baths: 2,
-    type: locale === 'en' ? "Apartment" : "شقة",
-    image: "/images/units/7.png",
-    status: "available" as const,
-  },
-  {
-    id: "4",
-    title: locale === 'en' ? "180 Sqm Unit (Side)" : "وحدة 180 متر (جانبي)",
-    location: locale === 'en' ? "10th of Ramadan, Egypt" : "العاشر من رمضان، مصر",
-    price: 1900000,
-    area: 180,
-    beds: 3,
-    baths: 2,
-    type: locale === 'en' ? "Apartment" : "شقة",
-    image: "/images/units/10.png",
-    status: "available" as const,
-  },
-  {
-    id: "5",
-    title: locale === 'en' ? "180 Sqm Unit (Front)" : "وحدة 180 متر (أمامي)",
-    location: locale === 'en' ? "10th of Ramadan, Egypt" : "العاشر من رمضان، مصر",
-    price: 1900000,
-    area: 180,
-    beds: 3,
-    baths: 2,
-    type: locale === 'en' ? "Apartment" : "شقة",
-    image: "/images/units/13.png",
-    status: "available" as const,
-  },
-  {
-    id: "6",
-    title: locale === 'en' ? "210 Sqm Unit (Front)" : "وحدة 210 متر (أمامي)",
-    location: locale === 'en' ? "10th of Ramadan, Egypt" : "العاشر من رمضان، مصر",
-    price: 2150000,
-    area: 210,
-    beds: 3,
-    baths: 3,
-    type: locale === 'en' ? "Apartment" : "شقة",
-    image: "/images/units/16.png",
-    status: "available" as const,
-  },
-  {
-    id: "7",
-    title: locale === 'en' ? "210 Sqm Unit (Back)" : "وحدة 210 متر (خلفي)",
-    location: locale === 'en' ? "10th of Ramadan, Egypt" : "العاشر من رمضان، مصر",
-    price: 2150000,
-    area: 210,
-    beds: 3,
-    baths: 3,
-    type: locale === 'en' ? "Apartment" : "شقة",
-    image: "/images/units/19.png",
-    status: "available" as const,
-  }
-];
+import { getProperties } from '@/lib/services';
 
 const getServices = (locale: string) => [
   {
@@ -122,7 +35,21 @@ const getServices = (locale: string) => [
 
 export default async function Home({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations();
-  const properties = getMockProperties(locale);
+  const allProperties = await getProperties();
+  const properties = allProperties.slice(0, 4).map(p => ({
+    id: p.id!,
+    title: locale === 'en' ? p.title_en : p.title_ar,
+    location: locale === 'en' ? p.location_en : p.location_ar,
+    price: p.price,
+    area: p.area,
+    beds: p.beds,
+    baths: p.baths,
+    type: locale === 'en' ? p.type : p.typeAr,
+    image: p.image,
+    images: p.images,
+    status: p.status,
+    locale: locale
+  }));
   const services = getServices(locale);
 
   return (

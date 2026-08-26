@@ -130,6 +130,7 @@ function PropertiesContent({ locale }: { locale: string }) {
                     baths: property.baths,
                     type: locale === 'en' ? property.type : property.typeAr,
                     image: property.image,
+                    images: property.images,
                     status: property.status,
                     locale: locale
                   }} 

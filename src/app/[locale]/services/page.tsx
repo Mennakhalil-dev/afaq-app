@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { getPackages } from '@/lib/services';
+import ImageSlider from '@/components/ui/ImageSlider';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,9 +32,11 @@ export default async function ServicesPage({ params: { locale } }: { params: { l
               
               {/* Image Header */}
               {pkg.image ? (
-                <div className="relative h-48 w-full">
-                  <img src={pkg.image} alt={locale === 'en' ? pkg.title_en : pkg.title_ar} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-dark-200 bg-opacity-60 flex flex-col justify-center items-center text-center p-4">
+                <div className="relative h-48 w-full group">
+                  <div className="absolute inset-0 z-0">
+                    <ImageSlider images={pkg.images && pkg.images.length > 0 ? pkg.images : [pkg.image]} alt={locale === 'en' ? pkg.title_en : pkg.title_ar} />
+                  </div>
+                  <div className="absolute inset-0 bg-dark-200 bg-opacity-60 flex flex-col justify-center items-center text-center p-4 z-10 pointer-events-none">
                     <h3 className="text-3xl font-black mb-1 text-gold">{locale === 'en' ? pkg.title_en : pkg.title_ar}</h3>
                     <p className="text-gray-200 text-lg">{locale === 'en' ? pkg.subtitle_en : pkg.subtitle_ar}</p>
                   </div>

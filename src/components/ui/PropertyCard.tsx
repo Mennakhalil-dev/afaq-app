@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { BedDouble, Bath, Maximize } from 'lucide-react';
+import ImageSlider from './ImageSlider';
 
 interface PropertyProps {
   id: string;
@@ -12,6 +13,7 @@ interface PropertyProps {
   baths: number;
   type: string;
   image: string;
+  images?: string[];
   status: 'available' | 'sold' | 'rented';
   locale: string;
 }
@@ -20,14 +22,10 @@ export default function PropertyCard({ property }: { property: PropertyProps }) 
   const t = useTranslations('Common');
   
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100">
-      <div className="relative h-64 overflow-hidden">
-        <img 
-          src={property.image} 
-          alt={property.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute top-4 right-4 rtl:left-4 rtl:right-auto flex flex-col gap-2">
+    <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col h-full">
+      <div className="relative h-64 overflow-hidden shrink-0">
+        <ImageSlider images={property.images && property.images.length > 0 ? property.images : [property.image]} alt={property.title} />
+        <div className="absolute top-4 right-4 rtl:left-4 rtl:right-auto flex flex-col gap-2 pointer-events-none z-20">
           <span className="bg-white/90 backdrop-blur text-dark-200 text-xs font-bold px-3 py-1 rounded-full shadow-sm">
             {property.type}
           </span>
