@@ -61,7 +61,7 @@ function PropertiesContent({ locale }: { locale: string }) {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-12">
           <div className="flex flex-col md:flex-row gap-4 items-end">
             <div className="flex-1 w-full">
-              <label className="block text-sm font-bold text-dark-100 mb-2">{t('propertyType')}</label>
+              <label className="block text-sm font-bold text-dark-100 mb-2">{t('property_type')}</label>
               <select value={type} onChange={(e) => setType(e.target.value)} className="w-full bg-neutral-50 border border-gray-200 text-dark-100 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gold/50">
                 <option value="All">{locale === 'en' ? 'All Types' : 'كل الأنواع'}</option>
                 <option value="Apartment">{locale === 'en' ? 'Apartments' : 'شقق'}</option>
@@ -75,7 +75,7 @@ function PropertiesContent({ locale }: { locale: string }) {
             </div>
             
             <div className="flex-1 w-full">
-              <label className="block text-sm font-bold text-dark-100 mb-2">{t('location')}</label>
+              <label className="block text-sm font-bold text-dark-100 mb-2">{t('city')}</label>
               <select value={city} onChange={(e) => setCity(e.target.value)} className="w-full bg-neutral-50 border border-gray-200 text-dark-100 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gold/50">
                 <option value="All">{locale === 'en' ? 'All Locations' : 'كل المدن'}</option>
                 <option value="10th of Ramadan">{locale === 'en' ? '10th of Ramadan' : 'العاشر من رمضان'}</option>
@@ -84,7 +84,7 @@ function PropertiesContent({ locale }: { locale: string }) {
             </div>
 
             <div className="flex-1 w-full">
-              <label className="block text-sm font-bold text-dark-100 mb-2">{t('operation')}</label>
+              <label className="block text-sm font-bold text-dark-100 mb-2">{t('operation_type')}</label>
               <select value={operation} onChange={(e) => setOperation(e.target.value)} className="w-full bg-neutral-50 border border-gray-200 text-dark-100 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gold/50">
                 <option value="All">{locale === 'en' ? 'All' : 'الكل'}</option>
                 <option value="Buy">{locale === 'en' ? 'Buy' : 'شراء'}</option>
@@ -93,7 +93,7 @@ function PropertiesContent({ locale }: { locale: string }) {
             </div>
 
             <button onClick={handleSearch} className="btn-gold w-full md:w-auto px-8 h-[50px] flex items-center justify-center font-bold">
-              {t('searchButton')}
+              {t('search_btn')}
             </button>
           </div>
         </div>
