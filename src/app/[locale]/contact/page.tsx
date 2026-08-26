@@ -29,7 +29,7 @@ export default async function ContactPage({ params: { locale } }: { params: { lo
           <div className="bg-white p-6 rounded-xl shadow-md text-center border border-gray-100">
             <Mail className="text-gold mx-auto mb-4" size={32} />
             <h3 className="font-bold text-dark-100 mb-2">البريد الإلكتروني</h3>
-            <p className="text-gray-500 text-sm">afaq.supplies@gmail.com</p>
+            <p className="text-gray-500 text-sm">afaq.supplies.com@gmail.com</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-md text-center border border-gray-100">
             <Clock className="text-gold mx-auto mb-4" size={32} />

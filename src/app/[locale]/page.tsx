@@ -95,22 +95,25 @@ const getMockProperties = (locale: string) => [
 
 const getServices = (locale: string) => [
   {
-    id: "silver",
-    title: locale === 'en' ? "Silver Package" : "باقة تشطيب سيلفر",
-    subtitle: locale === 'en' ? "150 sq.m Apartment - 300,000 EGP" : "شقة 150 متر - 300,000 جنية",
-    image: "/images/finishings/silver.png"
+    id: "properties",
+    title: locale === 'en' ? "Real Estate" : "العقارات",
+    subtitle: locale === 'en' ? "Buy, sell, and rent properties" : "بيع، شراء، وإيجار العقارات",
+    link: `/${locale}/properties`,
+    btnText: locale === 'en' ? "Explore Properties" : "تصفح العقارات"
   },
   {
-    id: "gold",
-    title: locale === 'en' ? "Gold Package" : "باقة تشطيب جولد",
-    subtitle: locale === 'en' ? "150 sq.m Apartment - 450,000 EGP" : "شقة 150 متر - 450,000 جنية",
-    image: "/images/finishings/gold.png"
+    id: "finishings",
+    title: locale === 'en' ? "Finishings" : "تشطيباتنا",
+    subtitle: locale === 'en' ? "High quality interior finishing packages" : "باقات تشطيب داخلي عالية الجودة",
+    link: `/${locale}/services`,
+    btnText: locale === 'en' ? "Explore Finishings" : "استكشف التشطيبات"
   },
   {
-    id: "diamond",
-    title: locale === 'en' ? "Diamond Package" : "باقة تشطيب الماسة",
-    subtitle: locale === 'en' ? "150 sq.m Apartment - 650,000 EGP" : "شقة 150 متر - 650,000 جنية",
-    image: "/images/finishings/diamond.jpg"
+    id: "security",
+    title: locale === 'en' ? "Security Systems" : "الأنظمة الأمنية",
+    subtitle: locale === 'en' ? "Smart security and surveillance solutions" : "حلول ذكية للمراقبة والأنظمة الأمنية",
+    link: `/${locale}/security`,
+    btnText: locale === 'en' ? "Explore Security" : "استكشف الأنظمة"
   }
 ];
 
@@ -138,8 +141,8 @@ export default async function Home({ params: { locale } }: { params: { locale: s
               <div key={service.id} className="group rounded-2xl overflow-hidden shadow-lg relative bg-dark-100 p-8 border border-gray-800 flex flex-col justify-center items-center text-center hover:bg-dark-200 transition-colors h-64">
                 <h3 className="text-3xl font-bold text-gold mb-3">{service.title}</h3>
                 <p className="text-gray-300 mb-6">{service.subtitle}</p>
-                <Link href={`/${locale}/services`} className="text-white font-medium group-hover:text-gold transition-colors inline-block px-6 py-2 border border-gold rounded-full hover:bg-gold hover:text-dark-100">
-                  {locale === 'en' ? 'Explore Finishings' : 'استكشف تشطيباتنا'} &larr;
+                <Link href={service.link} className="text-white font-medium group-hover:text-gold transition-colors inline-block px-6 py-2 border border-gold rounded-full hover:bg-gold hover:text-dark-100">
+                  {service.btnText} &larr;
                 </Link>
               </div>
             ))}

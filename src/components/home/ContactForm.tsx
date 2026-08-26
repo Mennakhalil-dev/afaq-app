@@ -20,7 +20,7 @@ export default function ContactForm() {
     data._subject = `رسالة جديدة من موقع آفاق: ${data.service_type}`;
     
     // Using environment variable for email
-    const emailTo = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "afaq.supplies@gmail.com";
+    const emailTo = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "afaq.supplies.com@gmail.com";
 
     try {
       const response = await fetch(`https://formsubmit.co/ajax/${emailTo}`, {
