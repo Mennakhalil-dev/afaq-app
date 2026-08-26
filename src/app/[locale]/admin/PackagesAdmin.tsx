@@ -19,7 +19,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
   const [includesEn, setIncludesEn] = useState('');
   const [featuresAr, setFeaturesAr] = useState('');
   const [featuresEn, setFeaturesEn] = useState('');
-  const [imageFiles, setImageFiles] = useState<FileList | null>(null);
+  const [imageFiles, setImageFiles] = useState<(File | null)[]>([null]);
 
   useEffect(() => {
     loadPackages();
@@ -37,10 +37,11 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     try {
       const uploadedImageUrls: string[] = [];
       
-      if (imageFiles && imageFiles.length > 0) {
-        for (let i = 0; i < imageFiles.length; i++) {
+      const validFiles = imageFiles.filter(f => f !== null) as File[];
+      if (validFiles.length > 0) {
+        for (let i = 0; i < validFiles.length; i++) {
           const formData = new FormData();
-          formData.append('image', imageFiles[i]);
+          formData.append('image', validFiles[i]);
           const res = await fetch('/api/upload', { method: 'POST', body: formData });
           const data = await res.json();
           if (data.url) uploadedImageUrls.push(data.url);
@@ -99,7 +100,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setIncludesEn(p.includes_en);
     setFeaturesAr(p.features_ar);
     setFeaturesEn(p.features_en);
-    setImageFiles(null);
+    setImageFiles([null]);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -118,7 +119,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setPriceTextAr(''); setPriceTextEn('');
     setIncludesAr(''); setIncludesEn('');
     setFeaturesAr(''); setFeaturesEn('');
-    setImageFiles(null);
+    setImageFiles([null]);
   };
 
   return (
@@ -172,9 +173,30 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-1">الصور (يمكنك اختيار أكثر من صورة)</label>
-            <input type="file" multiple accept="image/*" onChange={(e) => setImageFiles(e.target.files)} className="w-full border p-2 rounded" />
+          <div className="bg-neutral-50 p-4 rounded-xl border border-gray-100 space-y-3">
+            <label className="block text-sm font-bold text-gray-700 mb-1">صور الباقة</label>
+            {imageFiles.map((file, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center font-bold text-xs shrink-0">{index + 1}</div>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={(e) => {
+                    const newFiles = [...imageFiles];
+                    newFiles[index] = e.target.files?.[0] || null;
+                    setImageFiles(newFiles);
+                  }} 
+                  className="w-full border p-2 rounded bg-white text-sm" 
+                />
+              </div>
+            ))}
+            <button 
+              type="button" 
+              onClick={() => setImageFiles([...imageFiles, null])}
+              className="text-gold font-bold text-sm w-full py-2 border border-dashed border-gold rounded mt-2 hover:bg-gold/10 transition-colors"
+            >
+              + إضافة صورة أخرى
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
