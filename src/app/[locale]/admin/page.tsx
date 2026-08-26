@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { addProperty, getProperties, deleteProperty, updateProperty, Property } from '@/lib/services';
 import { useRouter } from 'next/navigation';
 
+import ContactsAdmin from './ContactsAdmin';
 import PackagesAdmin from './PackagesAdmin';
 
 export default function AdminPage() {
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
-  const [activeTab, setActiveTab] = useState<'properties' | 'finishings' | 'security'>('properties');
+  const [activeTab, setActiveTab] = useState<'properties' | 'finishings' | 'security' | 'contacts'>('properties');
   
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(false);
@@ -29,7 +30,7 @@ export default function AdminPage() {
   const [typeAr, setTypeAr] = useState('شقة');
   const [status, setStatus] = useState<'available'|'sold'|'rented'>('available');
   const [operation, setOperation] = useState<'Buy'|'Rent'>('Buy');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFiles, setImageFiles] = useState<FileList | null>(null);
   const [planFile, setPlanFile] = useState<File | null>(null);
   const [description, setDescription] = useState('');
   const [features, setFeatures] = useState('');
@@ -54,15 +55,6 @@ export default function AdminPage() {
     }
   };
 
-  const uploadImage = async (file: File) => {
-    const formData = new FormData();
-    formData.append('image', file);
-    const res = await fetch('/api/upload', { method: 'POST', body: formData });
-    const data = await res.json();
-    if (!data.url) throw new Error('فشل رفع الصورة');
-    return data.url;
-  };
-
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     setType(val);
@@ -75,7 +67,7 @@ export default function AdminPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingId && !imageFile) {
+    if (!editingId && (!imageFiles || imageFiles.length === 0)) {
       alert('الرجاء اختيار صورة الواجهة');
       return;
     }
@@ -83,17 +75,18 @@ export default function AdminPage() {
     setUploading(true);
 
     try {
-      let mainImageUrl = undefined;
+      const uploadedImageUrls: string[] = [];
       let planImageUrl = undefined;
 
-      // 1. Upload Main Image
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('image', imageFile);
-        const res = await fetch('/api/upload', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (!data.url) throw new Error('فشل رفع صورة الواجهة');
-        mainImageUrl = data.url;
+      // 1. Upload Main Images
+      if (imageFiles && imageFiles.length > 0) {
+        for (let i = 0; i < imageFiles.length; i++) {
+          const formData = new FormData();
+          formData.append('image', imageFiles[i]);
+          const res = await fetch('/api/upload', { method: 'POST', body: formData });
+          const data = await res.json();
+          if (data.url) uploadedImageUrls.push(data.url);
+        }
       }
 
       // 2. Upload Plan Image (if exists)
@@ -124,7 +117,10 @@ export default function AdminPage() {
         features: features
       };
       
-      if (mainImageUrl) payload.image = mainImageUrl;
+      if (uploadedImageUrls.length > 0) {
+        payload.image = uploadedImageUrls[0];
+        payload.images = uploadedImageUrls;
+      }
       if (planImageUrl) payload.planImage = planImageUrl;
 
       if (editingId) {
@@ -141,7 +137,7 @@ export default function AdminPage() {
       // Reset form
       setTitleAr(''); setTitleEn(''); setLocationAr(''); setLocationEn('');
       setPrice(''); setArea(''); setBeds(''); setBaths('');
-      setImageFile(null); setPlanFile(null); setDescription(''); setFeatures('');
+      setImageFiles(null); setPlanFile(null); setDescription(''); setFeatures('');
     } catch (err) {
       console.error(err);
       alert('حدث خطأ أثناء حفظ العقار');
@@ -168,7 +164,7 @@ export default function AdminPage() {
     setOperation(p.operation);
     setDescription(p.description || '');
     setFeatures(p.features || '');
-    setImageFile(null);
+    setImageFiles(null);
     setPlanFile(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -184,7 +180,7 @@ export default function AdminPage() {
     setEditingId(null);
     setTitleAr(''); setTitleEn(''); setLocationAr(''); setLocationEn('');
     setPrice(''); setArea(''); setBeds(''); setBaths('');
-    setImageFile(null); setPlanFile(null); setDescription(''); setFeatures('');
+    setImageFiles(null); setPlanFile(null); setDescription(''); setFeatures('');
   };
 
   if (!authenticated) {
@@ -233,8 +229,15 @@ export default function AdminPage() {
           >
             أنظمة الأمان
           </button>
+          <button 
+            onClick={() => setActiveTab('contacts')}
+            className={`px-6 py-2 rounded-lg font-bold transition-all ${activeTab === 'contacts' ? 'bg-gold text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+          >
+            رسائل العملاء
+          </button>
         </div>
 
+        {activeTab === 'contacts' && <ContactsAdmin />}
         {activeTab === 'finishings' && <PackagesAdmin type="finishings" />}
         {activeTab === 'security' && <PackagesAdmin type="security" />}
 
@@ -309,6 +312,17 @@ export default function AdminPage() {
                   <input type="number" value={area} onChange={(e) => setArea(e.target.value)} className="w-full border p-2 rounded" required dir="ltr" />
                 </div>
               </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1">صور العقار (يمكنك اختيار أكثر من صورة)</label>
+                <input type="file" multiple accept="image/*" onChange={(e) => setImageFiles(e.target.files)} className="w-full border p-2 rounded" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1">صورة المخطط (اختياري)</label>
+                <input type="file" accept="image/*" onChange={(e) => setPlanFile(e.target.files?.[0] || null)} className="w-full border p-2 rounded" />
+              </div>
+            </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>

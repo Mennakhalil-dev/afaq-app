@@ -19,7 +19,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
   const [includesEn, setIncludesEn] = useState('');
   const [featuresAr, setFeaturesAr] = useState('');
   const [featuresEn, setFeaturesEn] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFiles, setImageFiles] = useState<FileList | null>(null);
 
   useEffect(() => {
     loadPackages();
@@ -35,14 +35,16 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setLoading(true);
 
     try {
-      let imageUrl = undefined;
+      const uploadedImageUrls: string[] = [];
       
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('image', imageFile);
-        const res = await fetch('/api/upload', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (data.url) imageUrl = data.url;
+      if (imageFiles && imageFiles.length > 0) {
+        for (let i = 0; i < imageFiles.length; i++) {
+          const formData = new FormData();
+          formData.append('image', imageFiles[i]);
+          const res = await fetch('/api/upload', { method: 'POST', body: formData });
+          const data = await res.json();
+          if (data.url) uploadedImageUrls.push(data.url);
+        }
       }
 
       const payload: Partial<Package> = {
@@ -60,8 +62,9 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
         features_ar: featuresAr
       };
 
-      if (imageUrl) {
-        payload.image = imageUrl;
+      if (uploadedImageUrls.length > 0) {
+        payload.image = uploadedImageUrls[0]; // first image as main
+        payload.images = uploadedImageUrls;
       }
 
       if (editingId) {
@@ -96,7 +99,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setIncludesEn(p.includes_en);
     setFeaturesAr(p.features_ar);
     setFeaturesEn(p.features_en);
-    setImageFile(null);
+    setImageFiles(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -115,7 +118,7 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
     setPriceTextAr(''); setPriceTextEn('');
     setIncludesAr(''); setIncludesEn('');
     setFeaturesAr(''); setFeaturesEn('');
-    setImageFile(null);
+    setImageFiles(null);
   };
 
   return (
@@ -170,8 +173,8 @@ export default function PackagesAdmin({ type }: { type: 'finishings' | 'security
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-1">الصورة (اختياري)</label>
-            <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] || null)} className="w-full border p-2 rounded" />
+            <label className="block text-sm font-bold text-gray-700 mb-1">الصور (يمكنك اختيار أكثر من صورة)</label>
+            <input type="file" multiple accept="image/*" onChange={(e) => setImageFiles(e.target.files)} className="w-full border p-2 rounded" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

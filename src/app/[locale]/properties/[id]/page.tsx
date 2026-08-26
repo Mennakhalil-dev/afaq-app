@@ -62,6 +62,17 @@ export default async function PropertyDetailsPage({ params: { locale, id } }: { 
           </div>
         </div>
 
+        {/* Multi-Image Gallery */}
+        {property.images && property.images.length > 1 && (
+          <div className="mb-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {property.images.map((img, idx) => (
+              <div key={idx} className="relative h-32 md:h-48 rounded-xl overflow-hidden shadow-sm group border border-gray-100">
+                <img src={img} alt={`${title} ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           

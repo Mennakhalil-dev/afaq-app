@@ -16,6 +16,7 @@ export interface Property {
   type: string;
   typeAr: string;
   image: string;
+  images?: string[];
   planImage?: string;
   dataImage?: string;
   description?: string;
@@ -104,6 +105,17 @@ export async function submitContact(data: any) {
   }
 }
 
+export async function getContacts(): Promise<any[]> {
+  try {
+    const q = query(collection(db, 'contacts'), orderBy('createdAt', 'desc'));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    return [];
+  }
+}
+
 export interface Package {
   id?: string;
   type: 'finishings' | 'security';
@@ -119,6 +131,7 @@ export interface Package {
   features_en: string;
   features_ar: string;
   image?: string;
+  images?: string[];
   createdAt?: string;
 }
 

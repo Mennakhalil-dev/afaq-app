@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { useState } from 'react';
+import { submitContact } from '@/lib/services';
 
 export default function ContactForm() {
   const t = useTranslations('Contact');
@@ -19,24 +20,19 @@ export default function ContactForm() {
     // Add subject line
     data._subject = `رسالة جديدة من موقع آفاق: ${data.service_type}`;
     
-    // Using environment variable for email
-    const emailTo = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "afaq.supplies.com@gmail.com";
-
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${emailTo}`, {
+      // 1. Save to Firebase Database
+      await submitContact(data);
+      setIsSubmitted(true);
+
+      // 2. Try to send via FormSubmit (Don't block if it fails)
+      const emailTo = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "afaq.supplies.com@gmail.com";
+      fetch(`https://formsubmit.co/ajax/${emailTo}`, {
         method: "POST",
-        headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(data)
-      });
-      
-      if (response.ok) {
-        setIsSubmitted(true);
-      } else {
-        alert("حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة لاحقاً.");
-      }
+      }).catch(e => console.error("FormSubmit Error:", e));
+
     } catch (error) {
       console.error(error);
       alert("تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت.");
