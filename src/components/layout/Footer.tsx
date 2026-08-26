@@ -38,13 +38,13 @@ export default function Footer({ locale }: { locale: string }) {
             </h4>
             <ul className="space-y-4 text-sm">
               <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span>📍 العاشر من رمضان، مصر</span>
+                <span>📍 مدينة العاشر من رمضان - امتداد طريق مستشفي الجامعة - فيلا 75</span>
               </li>
               <li className="flex items-center space-x-3 rtl:space-x-reverse">
                 <span dir="ltr">01041952008</span>
               </li>
               <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span>afaq.supplies@gmail.com</span>
+                <span>afaq.supplies.com@gmail.com</span>
               </li>
             </ul>
           </div>

@@ -99,21 +99,24 @@ const getServices = (locale: string) => [
     title: locale === 'en' ? "Real Estate" : "العقارات",
     subtitle: locale === 'en' ? "Buy, sell, and rent properties" : "بيع، شراء، وإيجار العقارات",
     link: `/${locale}/properties`,
-    btnText: locale === 'en' ? "Explore Properties" : "تصفح العقارات"
+    btnText: locale === 'en' ? "Explore Properties" : "تصفح العقارات",
+    image: "/images/units/1.png"
   },
   {
     id: "finishings",
     title: locale === 'en' ? "Finishings" : "تشطيباتنا",
     subtitle: locale === 'en' ? "High quality interior finishing packages" : "باقات تشطيب داخلي عالية الجودة",
     link: `/${locale}/services`,
-    btnText: locale === 'en' ? "Explore Finishings" : "استكشف التشطيبات"
+    btnText: locale === 'en' ? "Explore Finishings" : "استكشف التشطيبات",
+    image: "/images/finishings/diamond.jpg"
   },
   {
     id: "security",
     title: locale === 'en' ? "Security Systems" : "الأنظمة الأمنية",
     subtitle: locale === 'en' ? "Smart security and surveillance solutions" : "حلول ذكية للمراقبة والأنظمة الأمنية",
     link: `/${locale}/security`,
-    btnText: locale === 'en' ? "Explore Security" : "استكشف الأنظمة"
+    btnText: locale === 'en' ? "Explore Security" : "استكشف الأنظمة",
+    image: "/images/security/surveillance.jpg"
   }
 ];
 
@@ -138,12 +141,18 @@ export default async function Home({ params: { locale } }: { params: { locale: s
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {services.map(service => (
-              <div key={service.id} className="group rounded-2xl overflow-hidden shadow-lg relative bg-dark-100 p-8 border border-gray-800 flex flex-col justify-center items-center text-center hover:bg-dark-200 transition-colors h-64">
-                <h3 className="text-3xl font-bold text-gold mb-3">{service.title}</h3>
-                <p className="text-gray-300 mb-6">{service.subtitle}</p>
-                <Link href={service.link} className="text-white font-medium group-hover:text-gold transition-colors inline-block px-6 py-2 border border-gold rounded-full hover:bg-gold hover:text-dark-100">
-                  {service.btnText} &larr;
-                </Link>
+              <div key={service.id} className="group rounded-2xl overflow-hidden shadow-lg relative p-8 flex flex-col justify-center items-center text-center transition-all duration-300 h-80 hover:-translate-y-2">
+                <div className="absolute inset-0 z-0">
+                  <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-dark-200 bg-opacity-70 group-hover:bg-opacity-60 transition-all duration-300"></div>
+                </div>
+                <div className="relative z-10 flex flex-col items-center justify-center h-full w-full">
+                  <h3 className="text-3xl font-bold text-gold mb-3">{service.title}</h3>
+                  <p className="text-gray-200 mb-6">{service.subtitle}</p>
+                  <Link href={service.link} className="text-white font-medium group-hover:text-gold transition-colors inline-block px-6 py-2 border border-gold rounded-full hover:bg-gold hover:text-dark-100 mt-auto">
+                    {service.btnText} &larr;
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

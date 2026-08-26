@@ -19,7 +19,7 @@ export default async function ContactPage({ params: { locale } }: { params: { lo
           <div className="bg-white p-6 rounded-xl shadow-md text-center border border-gray-100">
             <MapPin className="text-gold mx-auto mb-4" size={32} />
             <h3 className="font-bold text-dark-100 mb-2">العنوان</h3>
-            <p className="text-gray-500 text-sm">العاشر من رمضان، مصر</p>
+            <p className="text-gray-500 text-sm">مدينة العاشر من رمضان - امتداد طريق مستشفي الجامعة - فيلا 75</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-md text-center border border-gray-100">
             <Phone className="text-gold mx-auto mb-4" size={32} />
