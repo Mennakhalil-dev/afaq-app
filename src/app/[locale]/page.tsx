@@ -100,7 +100,7 @@ const getServices = (locale: string) => [
     subtitle: locale === 'en' ? "Buy, sell, and rent properties" : "بيع، شراء، وإيجار العقارات",
     link: `/${locale}/properties`,
     btnText: locale === 'en' ? "Explore Properties" : "تصفح العقارات",
-    image: "/images/units/1.png"
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80"
   },
   {
     id: "finishings",
@@ -108,7 +108,7 @@ const getServices = (locale: string) => [
     subtitle: locale === 'en' ? "High quality interior finishing packages" : "باقات تشطيب داخلي عالية الجودة",
     link: `/${locale}/services`,
     btnText: locale === 'en' ? "Explore Finishings" : "استكشف التشطيبات",
-    image: "/images/finishings/diamond.jpg"
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
   },
   {
     id: "security",
@@ -116,7 +116,7 @@ const getServices = (locale: string) => [
     subtitle: locale === 'en' ? "Smart security and surveillance solutions" : "حلول ذكية للمراقبة والأنظمة الأمنية",
     link: `/${locale}/security`,
     btnText: locale === 'en' ? "Explore Security" : "استكشف الأنظمة",
-    image: "/images/security/surveillance.jpg"
+    image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800&q=80"
   }
 ];
 

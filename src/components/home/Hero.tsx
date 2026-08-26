@@ -30,7 +30,7 @@ export default function Hero({ locale }: { locale: string }) {
             {t('cta_primary')}
           </Link>
           <a href="tel:01041952008" className="w-full sm:w-auto px-6 py-3 rounded-md font-medium text-white border border-white hover:bg-white hover:text-dark-200 transition-all duration-300 text-lg">
-            {locale === 'en' ? 'Call Now: 01041952008' : 'اتصل الآن: 01041952008'}
+            {t('cta_secondary')}
           </a>
         </div>
       </div>

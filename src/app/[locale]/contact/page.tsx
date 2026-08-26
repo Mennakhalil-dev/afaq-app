@@ -39,6 +39,21 @@ export default async function ContactPage({ params: { locale } }: { params: { lo
         </div>
       </div>
       
+      {/* Google Map */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl mb-16">
+        <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden h-96">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110196.5367808269!2d31.78927063412586!3d30.301569424683057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1457f6b92a297e61%3A0xb3551dbbdf38f828!2s10th%20of%20Ramadan%20City%2C%20Al%20Sharqia%20Governorate!5e0!3m2!1sen!2seg!4v1700000000000!5m2!1sen!2seg" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen={false} 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+      
       {/* Reusing Contact Form component */}
       <div className="bg-white">
         <ContactForm />
