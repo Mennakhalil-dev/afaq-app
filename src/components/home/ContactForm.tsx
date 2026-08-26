@@ -26,7 +26,7 @@ export default function ContactForm() {
       setIsSubmitted(true);
 
       // 2. Try to send via FormSubmit (Don't block if it fails)
-      const emailTo = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "afaq.supplies.com@gmail.com";
+      const emailTo = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "afaq.support.egypt@gmail.com";
       fetch(`https://formsubmit.co/ajax/${emailTo}`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
