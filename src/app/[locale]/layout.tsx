@@ -11,6 +11,9 @@ const notoKufi = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["400", "500", 
 export const metadata: Metadata = {
   title: "آفاق - Afaq Real Estate",
   description: "Afaq provides integrated real estate solutions.",
+  verification: {
+    google: "T11KpupnZbucaiYXViNeLxWAJIpt_Hissh1qoA2yWWM",
+  },
 };
 
 export default async function RootLayout({
